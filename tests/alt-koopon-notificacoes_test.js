@@ -76,7 +76,7 @@ describe('Service: NotificacoesModule', function () {
         });
 
         describe('onLoad', function() {
-            it('não deve chamar a busca - tempo ainda não passou - interval', inject(function($controller) {
+            it('deve chamar a busca - mesmo que o tempo ainda não tenha passado', inject(function($controller) {
                 spyOn(AltKooponNotificacoesService, 'buscar').and.callFake(function() {
                     return _q.reject({erro: true});
                 });
@@ -85,10 +85,10 @@ describe('Service: NotificacoesModule', function () {
 
                 _interval.flush(TEMPO_BUSCA - 1);
 
-                expect(AltKooponNotificacoesService.buscar).not.toHaveBeenCalled();
+                expect(AltKooponNotificacoesService.buscar).toHaveBeenCalled();
             }))
 
-            it('deve chamar a busca corretamente - interval', inject(function($controller) {
+            it('deve chamar a busca corretamente, tempo passou - interval', inject(function($controller) {
                 spyOn(AltKooponNotificacoesService, 'buscar').and.callFake(function() {
                     return _q.reject({erro: true});
                 });

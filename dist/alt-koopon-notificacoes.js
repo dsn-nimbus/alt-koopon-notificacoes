@@ -40,6 +40,8 @@
           };
 
           ;(function() {
+              self._buscar();
+
               self._idInterval = $interval(self._buscar, AltKooponNotificacoesService.TEMPO_BUSCA);
 
               $rootScope.$on('$locationChangeSuccess', function() {
