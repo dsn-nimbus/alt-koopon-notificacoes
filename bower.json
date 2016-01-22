@@ -1,9 +1,11 @@
 {
   "name": "alt-koopon-notificacoes",
   "main": "dist/alt-koopon-notificacoes.min.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/dsn-nimbus/alt-koopon-notificacoes.git",
-  "authors": ["dsn-nimbus <ericdantas0@gmail.com>"],
+  "authors": [
+    "dsn-nimbus <ericdantas0@gmail.com>"
+  ],
   "description": "desc",
   "keywords": [],
   "license": "MIT",
@@ -22,11 +24,10 @@
     "*.conf.js"
   ],
   "dependencies": {
-    "angular": ">=1.0.8"
+    "angular": ">=1.0.8",
+    "ng-xtorage": "~1.2.1"
   },
-  "devDependencies":
-  {
+  "devDependencies": {
     "angular-mocks": ">=1.0.8"
   }
-
 }
