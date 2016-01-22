@@ -322,12 +322,14 @@ describe('Service: NotificacoesModule', function () {
                 expect(_scope.aknCtrl.exibeNotificacao).toBe(true);
             }))
 
-            it('não deve chamar preencher as notificacoes com o retorno do service - location é /mensagens', inject(function($controller) {
+            it('não deve chamar preencher as notificacoes com o retorno do service - location é /mensagens e não tem nada na storage', inject(function($controller) {
                 spyOn(AltKooponNotificacoesService, 'buscar').and.callFake(function() {
                     return _q.when({qtd: 999});
                 });
 
                 spyOn(AltKooponNotificacoesManager, 'atualiza').and.callFake(angular.noop);
+                spyOn(AltKooponNotificacoesManager, 'cria').and.callFake(angular.noop);
+                spyOn(AltKooponNotificacoesManager, 'retorna').and.returnValue(undefined);
 
                 spyOn(_location, 'path').and.returnValue('/mensagens');
 
@@ -336,10 +338,35 @@ describe('Service: NotificacoesModule', function () {
                 _interval.flush(TEMPO_BUSCA + 1);
                 _rootScope.$digest();
 
-                expect(_scope.aknCtrl.qtdNotificacoes).toEqual(0);
+                expect(_scope.aknCtrl.qtdNotificacoes).toEqual(999);
                 expect(_scope.aknCtrl.exibeNotificacao).toBe(false);
                 expect(AltKooponNotificacoesService.buscar).toHaveBeenCalled();
+                expect(AltKooponNotificacoesManager.cria).toHaveBeenCalledWith({qtd: 0, qtdUltimaReq: 0, limpa: true});
+            }))
+
+            it('não deve chamar preencher as notificacoes com o retorno do service - location é /mensagens - só deve atualizar', inject(function($controller) {
+                spyOn(AltKooponNotificacoesService, 'buscar').and.callFake(function() {
+                    return _q.when({qtd: 999});
+                });
+
+                spyOn(AltKooponNotificacoesManager, 'atualiza').and.callFake(angular.noop);
+                spyOn(AltKooponNotificacoesManager, 'cria').and.callFake(angular.noop);
+                spyOn(AltKooponNotificacoesManager, 'retorna').and.returnValue({});
+
+                spyOn(_location, 'path').and.returnValue('/mensagens');
+
+                $controller(NOME_CONTROLLER, {$scope: _scope});
+
+                _interval.flush(TEMPO_BUSCA + 1);
+                _rootScope.$digest();
+
+                expect(_scope.aknCtrl.qtdNotificacoes).toEqual(999);
+                expect(_scope.aknCtrl.exibeNotificacao).toBe(false);
+                expect(AltKooponNotificacoesService.buscar).toHaveBeenCalled();
+                expect(AltKooponNotificacoesManager.cria).not.toHaveBeenCalled();
                 expect(AltKooponNotificacoesManager.atualiza).toHaveBeenCalledWith('limpa', true);
+                expect(AltKooponNotificacoesManager.atualiza).toHaveBeenCalledWith('qtd', 999);
+                expect(AltKooponNotificacoesManager.atualiza).toHaveBeenCalledWith('qtdUltimaReq', 999);
             }))
         })
     });
