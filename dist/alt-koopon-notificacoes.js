@@ -5,7 +5,7 @@
         .constant('ALT_KOOPON_CHAVE_NOTIFICACOES_MENSAGENS', 'alt_koopon_notificacoes_msg')
         .service('AltKooponNotificacoesManager', ['$xtorage', 'ALT_KOOPON_CHAVE_NOTIFICACOES_MENSAGENS', function($xtorage, ALT_KOOPON_CHAVE_NOTIFICACOES_MENSAGENS) {
             this.retorna = function() {
-                return $xtorage.get(ALT_KOOPON_CHAVE_NOTIFICACOES_MENSAGENS);
+                return $xtorage.get(ALT_KOOPON_CHAVE_NOTIFICACOES_MENSAGENS) ||{};
             }
 
             this.atualiza = function(prop, valor) {
@@ -26,8 +26,8 @@
 
             this.temMensagemPraLer = function() {
                 var infoStorage = this.retorna() || {};
-                var qtdMsg = infoStorage.qtd;
-                var novaQtdMsg = infoStorage.qtdUltimaReq;
+                var qtdMsg = infoStorage.qtd || 0;
+                var novaQtdMsg = infoStorage.qtdUltimaReq || 0;
                 var limpaStorage = infoStorage.limpa;
 
                 return (novaQtdMsg > qtdMsg) && !limpaStorage;
