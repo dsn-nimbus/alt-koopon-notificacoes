@@ -70,7 +70,7 @@
                     .then(function(info) {
                         self.qtdNotificacoes = info.qtd;
 
-                        if ($location.path() === "/mensagens") {
+                        if (($location.path() === "/mensagens") || ($location.path() === "/selecao-empresas")) {
                             self.exibeNotificacao = false;
 
                             if (!AltKooponNotificacoesManager.retorna()) {

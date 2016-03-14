@@ -1,6 +1,6 @@
 {
   "name": "alt-koopon-notificacoes",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "dist/alt-koopon-notificacoes.min.js",
   "scripts": {
     "test": "gulp coverage"
